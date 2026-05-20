@@ -6,7 +6,14 @@
       "Bash(cd /tmp)",
       "Bash(gh repo *)",
       "Bash(mkdir -p \"D:/Projects/netpulse/.claude/skills\")",
-      "Bash(cp -r /tmp/workshop-skills/.claude/skills/* \"D:/Projects/netpulse/.claude/skills/\")"
+      "Bash(cp -r /tmp/workshop-skills/.claude/skills/* \"D:/Projects/netpulse/.claude/skills/\")",
+      "Bash(mkdir -p \"D:/Projects/netpulse/apps/backend/src/routes\")",
+      "Bash(mkdir -p \"D:/Projects/netpulse/apps/backend/src/services\")",
+      "Bash(mkdir -p \"D:/Projects/netpulse/apps/backend/src/middleware\")",
+      "Bash(mkdir -p \"D:/Projects/netpulse/apps/backend/src/plugins\")",
+      "Bash(mkdir -p \"D:/Projects/netpulse/apps/backend/tests\")",
+      "Bash(npm install *)",
+      "Bash(npx jest *)"
     ]
   }
 }

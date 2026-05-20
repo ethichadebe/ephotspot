@@ -1,10 +1,7 @@
-import Fastify from 'fastify';
+import { buildApp } from './app';
 
-const app = Fastify({ logger: true });
-
+const app = buildApp();
 const PORT = parseInt(process.env.PORT || '3000', 10);
-
-app.get('/health', async () => ({ status: 'ok' }));
 
 const start = async () => {
   try {

@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SuperAdmin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Operator {
+  id                 String             @id @default(cuid())
+  name               String
+  email              String             @unique
+  password           String
+  subscriptionStatus SubscriptionStatus @default(trial)
+  isActive           Boolean            @default(true)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  nodes    HotspotNode[]
+  users    OperatorUser[]
+}
+
+model User {
+  id         String   @id @default(cuid())
+  phone      String?  @unique
+  email      String?  @unique
+  name       String?
+  googleId   String?  @unique
+  facebookId String?  @unique
+  appleId    String?  @unique
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  balance      DataBalance?
+  sessions     Session[]
+  purchases    Purchase[]
+  pushTokens   PushToken[]
+  operatorLinks OperatorUser[]
+}
+
+// Links a user to the operator whose network they first registered on
+model OperatorUser {
+  id         String   @id @default(cuid())
+  operatorId String
+  userId     String
+  createdAt  DateTime @default(now())
+
+  operator Operator @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([operatorId, userId])
+}
+
+model HotspotNode {
+  id           String    @id @default(cuid())
+  operatorId   String
+  name         String
+  ipAddress    String
+  radiusSecret String
+  apiUsername  String
+  apiPassword  String
+  isOnline     Boolean   @default(false)
+  lastSeenAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  operator Operator  @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  sessions Session[]
+
+  @@unique([operatorId, ipAddress])
+}
+
+model DataPackage {
+  id        String   @id @default(cuid())
+  name      String
+  dataMb    Int
+  priceZar  Decimal  @db.Decimal(10, 2)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  purchases Purchase[]
+}
+
+model DataBalance {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  remainingMb   Decimal  @default(0) @db.Decimal(12, 3)
+  rolledOverMb  Decimal  @default(0) @db.Decimal(12, 3)
+  lastPackageId String?
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id              String    @id @default(cuid())
+  userId          String
+  nodeId          String
+  radiusSessionId String    @unique
+  startedAt       DateTime  @default(now())
+  endedAt         DateTime?
+  dataUsedMb      Decimal   @default(0) @db.Decimal(12, 3)
+  // tracks which thresholds have been notified to avoid duplicates
+  notified20      Boolean   @default(false)
+  notified10      Boolean   @default(false)
+
+  user User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  node HotspotNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([nodeId])
+  @@index([startedAt])
+}
+
+model Purchase {
+  id               String        @id @default(cuid())
+  userId           String
+  packageId        String
+  amountZar        Decimal       @db.Decimal(10, 2)
+  paymentMethod    PaymentMethod
+  paymentReference String        @unique
+  createdAt        DateTime      @default(now())
+
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  package DataPackage @relation(fields: [packageId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model PushToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// OTP storage for phone auth
+model OtpCode {
+  id        String   @id @default(cuid())
+  phone     String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([phone])
+}
+
+enum SubscriptionStatus {
+  trial
+  active
+  suspended
+}
+
+enum PaymentMethod {
+  peach
+  bango
+}

@@ -13,7 +13,8 @@
       "Bash(mkdir -p \"D:/Projects/netpulse/apps/backend/src/plugins\")",
       "Bash(mkdir -p \"D:/Projects/netpulse/apps/backend/tests\")",
       "Bash(npm install *)",
-      "Bash(npx jest *)"
+      "Bash(npx jest *)",
+      "Bash(npx prisma *)"
     ]
   }
 }

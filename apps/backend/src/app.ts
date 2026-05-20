@@ -7,6 +7,7 @@ import { notificationRoutes } from './routes/notifications';
 import { adminRoutes } from './routes/admin';
 import { superAdminRoutes } from './routes/superAdmin';
 import { operatorAuthRoutes } from './routes/operatorAuth';
+import { userRoutes } from './routes/user';
 
 export function buildApp() {
   const app = Fastify({
@@ -23,6 +24,7 @@ export function buildApp() {
   app.register(adminRoutes);
   app.register(superAdminRoutes);
   app.register(operatorAuthRoutes);
+  app.register(userRoutes);
 
   return app;
 }

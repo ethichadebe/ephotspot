@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.aihero.dev)",
+      "Bash(gh api *)",
+      "Bash(cd /tmp)",
+      "Bash(gh repo *)",
+      "Bash(mkdir -p \"D:/Projects/netpulse/.claude/skills\")",
+      "Bash(cp -r /tmp/workshop-skills/.claude/skills/* \"D:/Projects/netpulse/.claude/skills/\")"
+    ]
+  }
+}

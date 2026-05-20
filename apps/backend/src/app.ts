@@ -3,6 +3,9 @@ import { authRoutes } from './routes/auth';
 import { radiusRoutes } from './routes/radius';
 import { packageRoutes } from './routes/packages';
 import { paymentRoutes } from './routes/payments';
+import { notificationRoutes } from './routes/notifications';
+import { adminRoutes } from './routes/admin';
+import { superAdminRoutes } from './routes/superAdmin';
 
 export function buildApp() {
   const app = Fastify({
@@ -15,6 +18,9 @@ export function buildApp() {
   app.register(radiusRoutes);
   app.register(packageRoutes);
   app.register(paymentRoutes);
+  app.register(notificationRoutes);
+  app.register(adminRoutes);
+  app.register(superAdminRoutes);
 
   return app;
 }

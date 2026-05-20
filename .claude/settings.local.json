@@ -27,7 +27,9 @@
       "Bash(gh issue create --title 'Push notifications service \\(FCM\\)' --label feature,size:S --body ' *)",
       "Bash(gh issue create --title 'MikroTik REST API integration service' --label feature,size:M --body ' *)",
       "Bash(gh issue create --title 'Operator admin API' --label feature,size:M --body ' *)",
-      "Bash(gh issue *)"
+      "Bash(gh issue *)",
+      "Bash(npx create-next-app@14 . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(npx next *)"
     ]
   }
 }

@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import { authRoutes } from './routes/auth';
 import { radiusRoutes } from './routes/radius';
+import { packageRoutes } from './routes/packages';
 
 export function buildApp() {
   const app = Fastify({
@@ -11,6 +12,7 @@ export function buildApp() {
 
   app.register(authRoutes);
   app.register(radiusRoutes);
+  app.register(packageRoutes);
 
   return app;
 }

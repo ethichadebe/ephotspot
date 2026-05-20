@@ -57,11 +57,11 @@ export async function adminRoutes(app: FastifyInstance) {
       where: { userId: request.params.id, operatorId },
     });
     if (!link) return reply.status(404).send({ error: 'User not found on this network' });
-    const user = await prisma.user.update({
-      where: { id: request.params.id },
+    const updated = await prisma.operatorUser.update({
+      where: { id: link.id },
       data: { isActive: false },
     });
-    return user;
+    return updated;
   });
 
   // ── Nodes ───────────────────────────────────────────────────────────────────

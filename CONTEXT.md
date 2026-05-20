@@ -18,6 +18,12 @@ _Avoid_: Tenant, cafe owner, merchant
 The platform owner. Manages all Operators, sets global package prices, and registers new Nodes.
 _Avoid_: Platform admin, root user
 
+### Relationships
+
+**Operator scope**:
+An Operator can only manage Users who have connected to their own Nodes. Deactivating a User is local — it bans them from that Operator's Nodes only, leaving their global account and Data Balance intact. No Operator can affect another Operator's Users.
+_Avoid_: Global ban, global deactivation (these are Super Admin actions only)
+
 ### Infrastructure
 
 **Node**:

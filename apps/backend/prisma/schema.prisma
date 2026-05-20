@@ -53,6 +53,7 @@ model OperatorUser {
   id         String   @id @default(cuid())
   operatorId String
   userId     String
+  isActive   Boolean  @default(true)
   createdAt  DateTime @default(now())
 
   operator Operator @relation(fields: [operatorId], references: [id], onDelete: Cascade)

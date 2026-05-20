@@ -87,9 +87,19 @@ export const radiusService = {
     }
   },
 
-  async checkAccess(userId: string): Promise<{ allow: boolean; reason?: string }> {
+  async checkAccess(userId: string, nodeId?: string): Promise<{ allow: boolean; reason?: string }> {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user || !user.isActive) return { allow: false, reason: 'User inactive or not found' };
+
+    if (nodeId) {
+      const node = await prisma.hotspotNode.findUnique({ where: { id: nodeId } });
+      if (node) {
+        const link = await prisma.operatorUser.findUnique({
+          where: { operatorId_userId: { operatorId: node.operatorId, userId } },
+        });
+        if (link && !link.isActive) return { allow: false, reason: 'User banned on this network' };
+      }
+    }
 
     const balance = await prisma.dataBalance.findUnique({ where: { userId } });
     if (!balance || Number(balance.remainingMb) <= 0) {

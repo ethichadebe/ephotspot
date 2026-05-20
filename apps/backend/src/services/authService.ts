@@ -47,8 +47,14 @@ export async function loginWithFacebook(accessToken: string): Promise<{ token: s
 }
 
 export async function loginWithApple(identityToken: string): Promise<{ token: string; user: User }> {
+  if (!process.env.APPLE_CLIENT_ID || !process.env.APPLE_PRIVATE_KEY) {
+    // TODO: fill APPLE_CLIENT_ID, APPLE_TEAM_ID, APPLE_KEY_ID, APPLE_PRIVATE_KEY in .env
+    // Install 'apple-signin-auth' and replace the decode below with real JWT verification
+    throw new Error('Apple Sign-In is not configured on this server');
+  }
+
   // Decode the JWT without verifying (Apple's public key verification is complex;
-  // in production use 'apple-signin-auth' library — TODO: add APPLE_* env vars)
+  // in production use 'apple-signin-auth' library)
   const parts = identityToken.split('.');
   if (parts.length !== 3) throw new Error('Invalid Apple token format');
   const decoded = JSON.parse(Buffer.from(parts[1], 'base64').toString());

@@ -25,8 +25,14 @@ export async function authRoutes(app: FastifyInstance) {
   app.post<{ Body: { identityToken: string } }>('/auth/apple', async (request, reply) => {
     const { identityToken } = request.body;
     if (!identityToken) return reply.status(400).send({ error: 'identityToken required' });
-    const { token, user } = await loginWithApple(identityToken);
-    return reply.status(200).send({ token, user });
+    try {
+      const { token, user } = await loginWithApple(identityToken);
+      return reply.status(200).send({ token, user });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Apple login failed';
+      if (msg.includes('not configured')) return reply.status(501).send({ error: msg });
+      return reply.status(401).send({ error: msg });
+    }
   });
 
   app.post<{ Body: { phone: string } }>('/auth/phone/request', async (request, reply) => {

@@ -1,6 +1,8 @@
 import Keychain from 'react-native-keychain';
 
-const API_URL = 'http://10.0.2.2:3000'; // Android emulator → host localhost
+const API_URL = __DEV__
+  ? 'http://192.168.18.11:3000'   // emulator — change to your LAN IP for physical device testing (e.g. http://192.168.1.x:3000)
+  : 'https://api.ephotspot.co.za'; // production
 
 const TOKEN_SERVICE = 'ephotspot_token';
 

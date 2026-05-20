@@ -9,8 +9,8 @@ export async function initiateBangoCharge(
   amountZar: number
 ): Promise<{ chargeId: string; status: string }> {
   if (!BANGO_API_KEY || !BANGO_API_SECRET) {
-    // TODO: configure BANGO_API_KEY and BANGO_API_SECRET in .env
-    return { chargeId: `dev-${Date.now()}`, status: 'pending' };
+    // TODO: fill BANGO_API_KEY and BANGO_API_SECRET in .env
+    throw new Error('Bango carrier billing is not configured on this server');
   }
 
   const res = await fetch(`${BANGO_API_URL}/v1/charge`, {

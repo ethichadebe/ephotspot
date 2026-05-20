@@ -18,8 +18,14 @@ export async function paymentRoutes(app: FastifyInstance) {
       if (!pkg) return reply.status(404).send({ error: 'Package not found' });
 
       const userId = (request as any).user.sub as string;
-      const checkoutUrl = await initiateCheckout(packageId, Number(pkg.priceZar), userId);
-      return reply.status(200).send({ checkoutUrl });
+      try {
+        const checkoutUrl = await initiateCheckout(packageId, Number(pkg.priceZar), userId);
+        return reply.status(200).send({ checkoutUrl });
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Payment initiation failed';
+        if (msg.includes('not configured')) return reply.status(501).send({ error: msg });
+        return reply.status(500).send({ error: msg });
+      }
     }
   );
 
@@ -62,8 +68,14 @@ export async function paymentRoutes(app: FastifyInstance) {
       if (!pkg) return reply.status(404).send({ error: 'Package not found' });
 
       const userId = (request as any).user.sub as string;
-      const result = await initiateBangoCharge(userId, phone, packageId, Number(pkg.priceZar));
-      return reply.status(200).send(result);
+      try {
+        const result = await initiateBangoCharge(userId, phone, packageId, Number(pkg.priceZar));
+        return reply.status(200).send(result);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Charge initiation failed';
+        if (msg.includes('not configured')) return reply.status(501).send({ error: msg });
+        return reply.status(500).send({ error: msg });
+      }
     }
   );
 

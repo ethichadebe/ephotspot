@@ -11,8 +11,8 @@ export async function initiateCheckout(
   userId: string
 ): Promise<string> {
   if (!PEACH_TOKEN || !PEACH_ENTITY_ID) {
-    // TODO: configure PEACH_PAYMENTS_TOKEN and PEACH_PAYMENTS_ENTITY_ID in .env
-    return `https://checkout.placeholder.dev?pkg=${packageId}&user=${userId}&amount=${amountZar}`;
+    // TODO: fill PEACH_PAYMENTS_TOKEN and PEACH_PAYMENTS_ENTITY_ID in .env
+    throw new Error('Peach Payments is not configured on this server');
   }
 
   const body = new URLSearchParams({

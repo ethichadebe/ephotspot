@@ -54,7 +54,12 @@ export default function PackagesScreen({ navigation }: Props) {
         ]);
       }
     } catch (err: unknown) {
-      Alert.alert('Payment failed', err instanceof Error ? err.message : 'Try again');
+      const msg = err instanceof Error ? err.message : 'Try again';
+      if (msg.includes('not configured')) {
+        Alert.alert('Not available', 'This payment method is not yet enabled. Please try another option or contact support.');
+      } else {
+        Alert.alert('Payment failed', msg);
+      }
     } finally {
       setPaying(false);
     }

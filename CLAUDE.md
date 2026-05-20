@@ -152,3 +152,19 @@ Leave a `BUILD_NOTES.md` in the repo root summarising:
 ---
 
 *Start with Issue #1. Work until all 19 are done. Commit everything.*
+
+---
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues at `github.com/ethichadebe/ephotspot`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Uses default skill label vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: one `CONTEXT.md` at the repo root + `docs/adr/`. See `docs/agents/domain.md`.

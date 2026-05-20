@@ -78,7 +78,7 @@ export async function requestPhoneOtp(phone: string): Promise<void> {
     const at = AfricasTalking({ apiKey: process.env.AT_API_KEY, username: process.env.AT_USERNAME });
     await at.SMS.send({
       to: [phone],
-      message: `Your NetPulse verification code is: ${code}`,
+      message: `Your EPHotspot verification code is: ${code}`,
       from: process.env.AT_SENDER_ID,
     });
   } else {

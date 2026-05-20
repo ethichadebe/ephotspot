@@ -1,13 +1,13 @@
-# PRD: NetPulse — Portable WiFi Hotspot Platform
+# PRD: EPHotspot — Portable WiFi Hotspot Platform
 
 ## Overview
-NetPulse is a centralized, multi-tenant WiFi hotspot management platform built on MikroTik infrastructure. Operators (schools, businesses, libraries) subscribe to deploy hotspot nodes, while end users connect, buy data, and roam across any NetPulse-enabled hotspot using a single Android app and one data balance that never expires.
+EPHotspot is a centralized, multi-tenant WiFi hotspot management platform built on MikroTik infrastructure. Operators (schools, businesses, libraries) subscribe to deploy hotspot nodes, while end users connect, buy data, and roam across any EPHotspot-enabled hotspot using a single Android app and one data balance that never expires.
 
 ## Problem Statement
 South African WiFi hotspot solutions (like Antamedia) are isolated per-deployment — a user's data is locked to one location. Existing ISP data products expire unused. There is no portable, affordable, operator-managed hotspot platform that gives users one balance usable anywhere and data that never expires.
 
 ## Goals
-- Users can download the app, buy data via airtime or card, and connect to any NetPulse hotspot with zero manual WiFi configuration
+- Users can download the app, buy data via airtime or card, and connect to any EPHotspot hotspot with zero manual WiFi configuration
 - Operators can manage their hotspot nodes, view usage and revenue, and configure their deployment from a web dashboard
 - Data balances roll over indefinitely — never expire
 - Platform runs on a central RADIUS server — one user account works across all operator nodes
@@ -24,7 +24,7 @@ South African WiFi hotspot solutions (like Antamedia) are isolated per-deploymen
 ## Users
 
 ### End Users
-South African mobile users connecting to a NetPulse hotspot. They are accustomed to buying mobile data in MB/GB bundles. Key needs: frictionless connection, airtime payment support, data that doesn't expire, visibility of remaining balance.
+South African mobile users connecting to a EPHotspot hotspot. They are accustomed to buying mobile data in MB/GB bundles. Key needs: frictionless connection, airtime payment support, data that doesn't expire, visibility of remaining balance.
 
 ### Hotspot Operators
 Businesses, schools, libraries deploying a MikroTik router. They pay a monthly platform subscription and keep all data revenue from their users. Key needs: user management, real-time monitoring, revenue visibility, simple configuration.
@@ -63,7 +63,7 @@ Manages global pricing packages, operator subscriptions, platform-wide settings,
 - Home screen: remaining data balance, connected hotspot name, top-up button
 - Package selection and purchase screen
 - Transaction history
-- Auto-connect to any NetPulse SSID on entry via `WifiNetworkSuggestion` API
+- Auto-connect to any EPHotspot SSID on entry via `WifiNetworkSuggestion` API
 - Push notifications: data warnings at configurable thresholds (e.g. 20%, 10%), purchase confirmations, connection events
 - Hard disconnect at zero data — no grace period
 

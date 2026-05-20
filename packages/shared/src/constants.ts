@@ -9,4 +9,4 @@ export const JWT_SUPER_ADMIN_EXPIRY = '1d';
 export const OTP_EXPIRY_MINUTES = 10;
 export const OTP_LENGTH = 6;
 
-export const NETPULSE_SECURE_SSID_PREFIX = 'NetPulse-';
+export const EPHOTSPOT_SECURE_SSID_PREFIX = 'EPHotspot-';

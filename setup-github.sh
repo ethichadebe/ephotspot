@@ -1,11 +1,11 @@
 #!/bin/bash
-# NetPulse — GitHub repo + issues setup script
+# EPHotspot — GitHub repo + issues setup script
 # Prerequisites: GitHub CLI installed and authenticated (gh auth login)
 # Usage: bash setup-github.sh
 
 set -e
 
-REPO_NAME="netpulse"
+REPO_NAME="ephotspot"
 REPO_DESC="Centralized multi-tenant WiFi hotspot platform built on MikroTik, FreeRADIUS, Node.js and React Native"
 
 echo "🚀 Creating GitHub repo: $REPO_NAME..."
@@ -21,11 +21,11 @@ cp ../PRD.md .
 cp ../HANDOFF.md .
 
 cat > README.md << 'EOF'
-# NetPulse
+# EPHotspot
 
 Centralized multi-tenant WiFi hotspot management platform built on MikroTik infrastructure.
 
-Operators subscribe monthly to deploy hotspot nodes. End users download the Android app, buy data via card or airtime, and roam across any NetPulse hotspot with one account and one data balance that never expires.
+Operators subscribe monthly to deploy hotspot nodes. End users download the Android app, buy data via card or airtime, and roam across any EPHotspot hotspot with one account and one data balance that never expires.
 
 ## Docs
 - [PRD.md](./PRD.md) — Full product requirements document
@@ -420,7 +420,7 @@ Home screen showing: current data balance (MB/GB remaining), connected hotspot n
 ## Acceptance criteria
 - [ ] Home screen displays current data balance in human-readable format (e.g. '2.3 GB remaining')
 - [ ] Balance percentage is shown as a progress bar or arc
-- [ ] Connected hotspot name is displayed when on a NetPulse SSID
+- [ ] Connected hotspot name is displayed when on a EPHotspot SSID
 - [ ] 'Top up' button navigates to the packages screen
 - [ ] Balance refreshes automatically when app comes to foreground
 - [ ] Zero balance state shows a clear 'Buy data to reconnect' message
@@ -438,12 +438,12 @@ gh issue create \
 Core UX promise — user should never manually type a WiFi password.
 
 ## What to build
-On login, use Android's \`WifiNetworkSuggestion\` API to register the user's unique SSID and password with the system. App requests location permission (required for WiFi APIs). When the user is in range of a NetPulse hotspot, Android connects automatically.
+On login, use Android's \`WifiNetworkSuggestion\` API to register the user's unique SSID and password with the system. App requests location permission (required for WiFi APIs). When the user is in range of a EPHotspot hotspot, Android connects automatically.
 
 ## Acceptance criteria
 - [ ] App requests \`ACCESS_FINE_LOCATION\` permission on first launch with clear explanation
 - [ ] On successful auth, \`WifiNetworkSuggestion\` is registered with user's unique SSID credentials
-- [ ] Device automatically connects to the NetPulse SSID when in range without user action
+- [ ] Device automatically connects to the EPHotspot SSID when in range without user action
 - [ ] Works on Android 10 and above
 - [ ] On logout, the WiFi suggestion is removed
 - [ ] Fallback manual password display screen exists for devices below Android 10
@@ -502,8 +502,8 @@ Issues #8, #18"
 echo "✅ Issue 19 created"
 
 echo ""
-echo "🎉 All done! Your NetPulse repo is ready."
+echo "🎉 All done! Your EPHotspot repo is ready."
 echo "   Repo: https://github.com/$(gh api user --jq .login)/$REPO_NAME"
 echo ""
 echo "Next step — in Claude Code:"
-echo "  'Work through all open GitHub issues in netpulse in order, starting with Issue 1. Use PRD.md and HANDOFF.md as your source of truth.'"
+echo "  'Work through all open GitHub issues in ephotspot in order, starting with Issue 1. Use PRD.md and HANDOFF.md as your source of truth.'"

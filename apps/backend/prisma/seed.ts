@@ -6,10 +6,10 @@ const prisma = new PrismaClient();
 async function main() {
   // Super admin
   const superAdmin = await prisma.superAdmin.upsert({
-    where: { email: 'admin@netpulse.co.za' },
+    where: { email: 'admin@ephotspot.co.za' },
     update: {},
     create: {
-      email: 'admin@netpulse.co.za',
+      email: 'admin@ephotspot.co.za',
       // bcrypt hash of 'superadmin123' — replace in production
       password: '$2b$10$K.0HwpsoPDGaB/atFBmmXOGTw4ceeg33.WKxYe4i8qhFzX5xtL2Gy',
     },

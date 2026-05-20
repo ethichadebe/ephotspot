@@ -1,8 +1,8 @@
-# NetPulse
+# EPHotspot
 
 Centralized multi-tenant WiFi hotspot management platform built on MikroTik infrastructure.
 
-Operators subscribe monthly to deploy hotspot nodes. End users download the Android app, buy data via card or airtime, and roam across any NetPulse hotspot with one account and one data balance that never expires.
+Operators subscribe monthly to deploy hotspot nodes. End users download the Android app, buy data via card or airtime, and roam across any EPHotspot hotspot with one account and one data balance that never expires.
 
 ## Docs
 

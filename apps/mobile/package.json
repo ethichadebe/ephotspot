@@ -1,5 +1,5 @@
 {
-  "name": "@netpulse/mobile",
+  "name": "@ephotspot/mobile",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@netpulse/shared": "*",
+    "@ephotspot/shared": "*",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/netinfo": "^11.3.2",
     "@react-native-google-signin/google-signin": "^13.1.0",

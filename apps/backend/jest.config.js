@@ -5,7 +5,7 @@ module.exports = {
   roots: ['<rootDir>/tests'],
   testMatch: ['**/*.test.ts'],
   moduleNameMapper: {
-    '^@netpulse/shared$': '<rootDir>/../../packages/shared/src/index.ts',
+    '^@ephotspot/shared$': '<rootDir>/../../packages/shared/src/index.ts',
   },
   clearMocks: true,
   collectCoverageFrom: ['src/**/*.ts', '!src/index.ts'],

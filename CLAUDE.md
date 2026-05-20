@@ -1,4 +1,4 @@
-# CLAUDE.md — NetPulse Autonomous Build Instructions
+# CLAUDE.md — EPHotspot Autonomous Build Instructions
 
 > This file tells Claude Code exactly what to build, how to work, and what decisions have already been made. Read this fully before writing a single line of code.
 
@@ -6,7 +6,7 @@
 
 ## What you are building
 
-**NetPulse** — a centralized, multi-tenant WiFi hotspot management platform built on MikroTik infrastructure. Full context is in `PRD.md`. All architectural decisions are in `HANDOFF.md`. Do not re-ask questions that are already answered in those files.
+**EPHotspot** — a centralized, multi-tenant WiFi hotspot management platform built on MikroTik infrastructure. Full context is in `PRD.md`. All architectural decisions are in `HANDOFF.md`. Do not re-ask questions that are already answered in those files.
 
 ---
 
@@ -44,7 +44,7 @@ You are working **autonomously**. The human is not available for questions. Foll
 ## Monorepo structure
 
 ```
-netpulse/
+ephotspot/
 ├── apps/
 │   ├── backend/          # Fastify API + RADIUS bridge + Socket.io
 │   ├── admin/            # Next.js operator dashboard

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import type { JwtPayload } from '@netpulse/shared';
+import type { JwtPayload } from '@ephotspot/shared';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-production';
 const JWT_SUPER_ADMIN_SECRET = process.env.JWT_SUPER_ADMIN_SECRET || 'dev-super-secret-change-in-production';

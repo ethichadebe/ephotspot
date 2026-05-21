@@ -4,7 +4,7 @@ import {
   ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView,
 } from 'react-native';
 import { apiFetch, saveToken } from '../services/api';
-import { registerWifiSuggestion } from '../services/wifi';
+import { registerWifiSuggestion, EPHOTSPOT_SSID } from '../services/wifi';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 
@@ -38,7 +38,7 @@ export default function LoginScreen({ navigation }: Props) {
       );
       await saveToken(res.token);
       // Register WiFi suggestion after successful auth
-      await registerWifiSuggestion('EPHotspot-Secure', res.user.id);
+      await registerWifiSuggestion(EPHOTSPOT_SSID);
       navigation.replace('Home');
     } catch (err: unknown) {
       Alert.alert('Invalid OTP', err instanceof Error ? err.message : 'Verification failed');

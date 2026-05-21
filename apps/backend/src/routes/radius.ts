@@ -4,9 +4,9 @@ import type { AccountingPacket } from '../services/radiusService';
 
 export async function radiusRoutes(app: FastifyInstance) {
   // Called by FreeRADIUS rlm_rest module for Access-Request
-  app.post<{ Body: { username: string; nodeId?: string } }>('/radius/authorize', async (request, reply) => {
-    const { username, nodeId } = request.body;
-    const result = await radiusService.checkAccess(username, nodeId);
+  app.post<{ Body: { username: string; password: string; nodeId?: string } }>('/radius/authorize', async (request, reply) => {
+    const { username, password, nodeId } = request.body;
+    const result = await radiusService.checkAccess(username, password, nodeId);
     if (result.allow) {
       return reply.status(200).send({ reply: 'Access-Accept' });
     }

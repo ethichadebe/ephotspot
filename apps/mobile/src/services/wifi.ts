@@ -7,14 +7,18 @@ export function isAutoConnectSupported(): boolean {
   return Platform.OS === 'android' && (Platform.Version as number) >= 29;
 }
 
-export async function registerWifiSuggestion(ssid: string, password: string): Promise<void> {
+// EPHotspot SSIDs: open guest SSID for onboarding, same open SSID for authenticated access.
+// MikroTik Hotspot handles auth via captive portal — no WPA key on the SSID itself.
+export const EPHOTSPOT_SSID = 'EPHotspot';
+
+export async function registerWifiSuggestion(ssid: string): Promise<void> {
   if (!isAutoConnectSupported()) return; // fallback handled in UI
   try {
-    // Uses react-native-wifi-reborn or custom native module
     // TODO: link a wifi suggestion native module — placeholder for now
+    // For open (no WPA) networks, call addSuggestion with no password argument
     const WifiModule = NativeModules.WifiSuggestion;
-    if (WifiModule?.addSuggestion) {
-      await WifiModule.addSuggestion(ssid, password);
+    if (WifiModule?.addOpenSuggestion) {
+      await WifiModule.addOpenSuggestion(ssid);
     }
   } catch (err) {
     console.warn('WifiNetworkSuggestion registration failed:', err);

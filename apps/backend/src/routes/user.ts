@@ -5,6 +5,15 @@ import { authenticateUser } from '../middleware/authenticate';
 export async function userRoutes(app: FastifyInstance) {
   app.addHook('preHandler', authenticateUser);
 
+  app.get('/user/profile', async (request) => {
+    const userId = (request as any).user.sub as string;
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { hotspotPassword: true, phone: true, email: true, name: true },
+    });
+    return user;
+  });
+
   app.get('/user/balance', async (request) => {
     const userId = (request as any).user.sub as string;
     const balance = await prisma.dataBalance.findUnique({ where: { userId } });

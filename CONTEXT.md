@@ -48,6 +48,14 @@ _Avoid_: Plan, bundle, tier, product
 A completed payment transaction that adds MB to a User's Data Balance. Balance rolls over — new MB is added to whatever remains, never reset.
 _Avoid_: Top-up, transaction, order
 
+**Hotspot Password**:
+A 6-character uppercase alphanumeric code (e.g. `28EP75`) generated once per User at registration. Used as the MikroTik Hotspot captive-portal login credential. Displayed prominently in the app so the User can type it on a device that doesn't have the app installed.
+_Avoid_: WiFi password, WPA key, network password (the SSID itself is open — no WPA password)
+
+**Hotspot Username**:
+The identifier a User types into the MikroTik captive portal alongside their Hotspot Password. For phone-registered Users this is their phone number; for OAuth Users it is their email address — something they already know without opening the app.
+_Avoid_: Login, account name
+
 ### Sessions
 
 **Session**:

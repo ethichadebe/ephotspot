@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, AppState, ActivityIndicator,
+  View, Text, StyleSheet, TouchableOpacity, AppState, ActivityIndicator, Clipboard,
 } from 'react-native';
 import { apiFetch, clearToken } from '../services/api';
-import { removeWifiSuggestion } from '../services/wifi';
+import { removeWifiSuggestion, EPHOTSPOT_SSID } from '../services/wifi';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 
@@ -13,6 +13,13 @@ interface Balance {
   remainingMb: number;
   rolledOverMb: number;
   lastPackageId: string | null;
+}
+
+interface Profile {
+  hotspotPassword: string;
+  phone: string | null;
+  email: string | null;
+  name: string | null;
 }
 
 function formatMb(mb: number): string {
@@ -31,12 +38,17 @@ function BalanceArc({ pct }: { pct: number }) {
 
 export default function HomeScreen({ navigation }: Props) {
   const [balance, setBalance] = useState<Balance | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const loadBalance = useCallback(async () => {
+  const loadData = useCallback(async () => {
     try {
-      const data = await apiFetch<Balance>('/user/balance');
-      setBalance(data);
+      const [bal, prof] = await Promise.all([
+        apiFetch<Balance>('/user/balance'),
+        apiFetch<Profile>('/user/profile'),
+      ]);
+      setBalance(bal);
+      setProfile(prof);
     } catch {
       // ignore
     } finally {
@@ -45,16 +57,16 @@ export default function HomeScreen({ navigation }: Props) {
   }, []);
 
   useEffect(() => {
-    loadBalance();
+    loadData();
     const sub = AppState.addEventListener('change', (state) => {
-      if (state === 'active') loadBalance();
+      if (state === 'active') loadData();
     });
     return () => sub.remove();
-  }, [loadBalance]);
+  }, [loadData]);
 
   async function handleLogout() {
     await clearToken();
-    await removeWifiSuggestion('EPHotspot-Secure');
+    await removeWifiSuggestion(EPHOTSPOT_SSID);
     navigation.replace('Login');
   }
 
@@ -88,6 +100,17 @@ export default function HomeScreen({ navigation }: Props) {
           </>
         )}
       </View>
+
+      {profile && (
+        <View style={styles.credCard}>
+          <Text style={styles.credLabel}>WiFi login (for other devices)</Text>
+          <Text style={styles.credUsername}>{profile.phone ?? profile.email}</Text>
+          <TouchableOpacity onPress={() => Clipboard.setString(profile.hotspotPassword)}>
+            <Text style={styles.credPassword}>{profile.hotspotPassword}</Text>
+            <Text style={styles.credCopyHint}>Tap to copy password</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       <TouchableOpacity style={styles.topUpBtn} onPress={() => navigation.navigate('Packages')}>
         <Text style={styles.topUpText}>Top up data</Text>
@@ -124,4 +147,12 @@ const styles = StyleSheet.create({
   topUpText: { color: '#fff', fontSize: 18, fontWeight: '700' },
   historyLink: { alignItems: 'center' },
   historyText: { color: '#1d4ed8', fontSize: 14 },
+  credCard: {
+    backgroundColor: '#1e3a8a', borderRadius: 16, padding: 20,
+    marginBottom: 16,
+  },
+  credLabel: { color: '#93c5fd', fontSize: 12, marginBottom: 6 },
+  credUsername: { color: '#fff', fontSize: 15, marginBottom: 12 },
+  credPassword: { color: '#fff', fontSize: 36, fontWeight: '800', letterSpacing: 6 },
+  credCopyHint: { color: '#93c5fd', fontSize: 12, marginTop: 4 },
 });

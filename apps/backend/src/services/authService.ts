@@ -1,8 +1,14 @@
+import { randomBytes } from 'crypto';
 import { OAuth2Client } from 'google-auth-library';
 import { prisma } from '../lib/prisma';
 import { signUserToken } from '../lib/jwt';
 import { generateOtp, saveOtp, verifyOtp } from '../lib/otp';
 import type { User } from '@prisma/client';
+
+function generateHotspotPassword(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  return Array.from(randomBytes(6)).map(b => chars[b % chars.length]).join('');
+}
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -21,6 +27,7 @@ export async function loginWithGoogle(idToken: string): Promise<{ token: string;
       googleId: payload.sub,
       email: payload.email,
       name: payload.name,
+      hotspotPassword: generateHotspotPassword(),
     },
   });
 
@@ -40,6 +47,7 @@ export async function loginWithFacebook(accessToken: string): Promise<{ token: s
       facebookId: fbUser.id,
       email: fbUser.email,
       name: fbUser.name,
+      hotspotPassword: generateHotspotPassword(),
     },
   });
 
@@ -68,6 +76,7 @@ export async function loginWithApple(identityToken: string): Promise<{ token: st
     create: {
       appleId,
       email,
+      hotspotPassword: generateHotspotPassword(),
     },
   });
 
@@ -100,7 +109,7 @@ export async function verifyPhoneOtp(phone: string, code: string): Promise<{ tok
   const user = await prisma.user.upsert({
     where: { phone },
     update: {},
-    create: { phone },
+    create: { phone, hotspotPassword: generateHotspotPassword() },
   });
 
   return { token: signUserToken(user.id, 'user'), user };

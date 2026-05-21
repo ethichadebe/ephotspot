@@ -11,8 +11,8 @@ A person with an EPHotspot account and a data balance. Downloads the Android app
 _Avoid_: Customer, subscriber, client
 
 **Operator**:
-A business or institution (school, cafe, library) that deploys one or more Nodes and pays a monthly platform subscription. Has access to the admin dashboard.
-_Avoid_: Tenant, cafe owner, merchant
+A business or institution (school, cafe, library) that hosts one or more EPHotspot Nodes on their premises. EPHotspot pays the Operator a fixed placement fee in exchange for hosting rights and internet connectivity. Operators do not sell data, set prices, or receive revenue from user purchases — they are location partners, not resellers.
+_Avoid_: Tenant, cafe owner, merchant, reseller, ISP
 
 **Super Admin**:
 The platform owner. Manages all Operators, sets global package prices, and registers new Nodes.

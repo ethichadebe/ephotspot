@@ -27,8 +27,12 @@ _Avoid_: Global ban, global deactivation (these are Super Admin actions only)
 ### Infrastructure
 
 **Node**:
-A single MikroTik router deployment at an Operator's physical location. Enforces data access by authenticating sessions against the central RADIUS server. Has no business logic of its own.
+A single MikroTik router deployment at an Operator's physical location. Broadcasts one open SSID (`EPHotspot`). Enforces data access by authenticating sessions against the central RADIUS server via MikroTik Hotspot captive portal. Has no business logic of its own.
 _Avoid_: Router, hotspot, device, access point, site
+
+**SSID**:
+A single open network named `EPHotspot`. No WPA password. All Nodes broadcast the same SSID. MikroTik Hotspot blocks internet access until the User authenticates via captive portal. There is no separate guest or secure SSID.
+_Avoid_: Guest network, secure network, EPHotspot-Secure
 
 **RADIUS Server**:
 The central FreeRADIUS instance that all Nodes authenticate against. The single source of truth for whether a User is allowed to connect and how much data they have remaining.
